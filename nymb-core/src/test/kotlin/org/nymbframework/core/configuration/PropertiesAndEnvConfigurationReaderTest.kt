@@ -5,14 +5,15 @@ import io.mockk.mockk
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.Test
 
-class ConfigurationReaderTest {
+class PropertiesAndEnvConfigurationReaderTest {
     @Test
     fun readsAPropertyFile() {
         val envFacade = mockk<EnvFacade>()
-        val configurationReader = ConfigurationReader("/test-config.properties", envFacade)
-
         every { envFacade.getenv(any()) } returns null
+        every { envFacade.getenv("APP_MODE") } returns "test"
         every { envFacade.getenv("NYMB_TEST_ENV") } returns "an env test"
+
+        val configurationReader = PropertiesAndEnvConfigurationReader("/test-config.properties", envFacade)
 
         assertThat(configurationReader["nymb.test.env"]).isEqualTo("an env test")
         assertThat(configurationReader["nymb.test"]).isEqualTo("a test")
