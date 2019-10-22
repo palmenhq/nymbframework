@@ -16,9 +16,9 @@ class CheckCommand(
     private val logger = getLogger(CheckCommand::class.java)
     override fun call(): Int {
         if (disableEmojis || cliDisableEmojis) {
-            logger.info("All is good! :+1:")
+            logger.info("All is good in appMode \"$appMode\"! :+1:")
         } else {
-            logger.info("All is good 👍")
+            logger.info("All is good in appMode \"$appMode\" 👍")
         }
 
         return 0
