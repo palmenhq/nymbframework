@@ -73,7 +73,7 @@
                 <configuration>
                     <source>${java.version}</source>
                     <target>${java.version}</target>
-                    <optimize>true</optimize>
+                    <parameters>true</parameters>
                 </configuration>
             </plugin>
 

@@ -28,6 +28,9 @@ class NymbApplication(
         environment.bundles
             .flatMap { bundle -> bundle.commands }
             .forEach { command -> commandLine.addSubcommand(command) }
+        environment.commands.forEach { command ->
+            commandLine.addSubcommand(command)
+        }
 
         environment.bundles.forEach { bundle ->
             bundle.preRun()

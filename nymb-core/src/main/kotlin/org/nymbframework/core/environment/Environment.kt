@@ -2,11 +2,15 @@ package org.nymbframework.core.environment
 
 import java.util.function.Consumer
 import org.nymbframework.core.Bundle
+import org.nymbframework.core.commandline.NymbCommand
 import org.nymbframework.core.configuration.ConfigurationReader
 import org.nymbframework.core.configuration.EnvFacade
 import org.nymbframework.core.health.HealthChecker
 
 class Environment(val configurationReader: ConfigurationReader, envFacade: EnvFacade = EnvFacade()) {
+    private val _commands = mutableListOf<NymbCommand>()
+    val commands: List<NymbCommand>
+        get() = _commands
     private val _bundles = mutableListOf<Bundle>()
     val bundles: List<Bundle>
         get() = _bundles
@@ -17,6 +21,11 @@ class Environment(val configurationReader: ConfigurationReader, envFacade: EnvFa
 
     init {
         registerComponent(envFacade)
+    }
+
+    fun <T : NymbCommand> registerCommand(command: NymbCommand): Environment {
+        _commands.add(command)
+        return this
     }
 
     fun <T : Bundle> registerBundle(bundle: T): Environment {
@@ -33,19 +42,22 @@ class Environment(val configurationReader: ConfigurationReader, envFacade: EnvFa
         return this
     }
 
-    fun <T : Any> registerComponent(componentClass: Class<T>, instance: T) {
+    fun <T : Any> registerComponent(componentClass: Class<T>, instance: T): Environment {
         if (!componentClass.isInstance(instance)) {
             throw IllegalComponentException("Expected instance to be instance of the registered type $componentClass, but was really ${instance::class}")
         }
         components[componentClass] = instance
+        return this
     }
 
-    fun <T : Any> registerComponent(instance: T) {
+    fun <T : Any> registerComponent(instance: T): Environment {
         components[instance::class.java] = instance
+        return this
     }
 
-    fun <T : Any> registerLazyComponent(componentClass: Class<T>, getter: (Environment) -> T) {
+    fun <T : Any> registerLazyComponent(componentClass: Class<T>, getter: (Environment) -> T): Environment {
         lazyComponents[componentClass] = getter
+        return this
     }
 
     @Suppress("UNCHECKED_CAST")
@@ -88,8 +100,9 @@ class Environment(val configurationReader: ConfigurationReader, envFacade: EnvFa
     }
 
     fun getHealthCheckers(): List<HealthChecker> = healthCheckers
-    fun registerComponentAlias(alias: Class<*>, target: Class<*>) {
+    fun registerComponentAlias(alias: Class<*>, target: Class<*>): Environment {
         componentAliases[alias] = target
+        return this
     }
 }
 
