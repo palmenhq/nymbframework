@@ -7,6 +7,7 @@ import org.nymbframework.bundles.server.ServerBundle
 import org.nymbframework.core.commandline.RootCommand
 import org.nymbframework.core.configuration.PropertiesConfigurationReader
 import org.nymbframework.core.environment.Environment
+import org.nymbframework.core.environment.EnvironmentCommandFactory
 import org.slf4j.LoggerFactory
 import picocli.CommandLine
 
@@ -19,8 +20,10 @@ class NymbApplication(
             (LoggerFactory.getLogger(Logger.ROOT_LOGGER_NAME) as Logger).level = Level.valueOf(logLevel)
         }
 
-        val rootCommand = RootCommand()
-        val commandLine = CommandLine(rootCommand)
+        val environmentCommandFactory = EnvironmentCommandFactory(environment)
+        environment.registerComponent(environmentCommandFactory)
+        val rootCommand = RootCommand(environment)
+        val commandLine = CommandLine(rootCommand, environmentCommandFactory)
         rootCommand.commandLine = commandLine
         environment.bundles
             .flatMap { bundle -> bundle.commands }

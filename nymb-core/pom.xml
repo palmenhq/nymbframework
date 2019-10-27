@@ -43,8 +43,9 @@
         <java.version>1.8</java.version>
         <kotlin.version>1.3.31</kotlin.version>
         <jdbi.version>3.10.0</jdbi.version>
-        <jackson.version>2.9.9.3</jackson.version>
+        <jackson.version>2.9.9</jackson.version>
         <hikari.version>3.4.0</hikari.version>
+        <liquibase.version>3.7.0</liquibase.version>
     </properties>
 
     <dependencies>
@@ -78,8 +79,18 @@
         </dependency>
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-core</artifactId>
+            <version>${jackson.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-databind</artifactId>
             <version>${jackson.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.yaml</groupId>
+            <artifactId>snakeyaml</artifactId>
+            <version>1.25</version>
         </dependency>
 
         <dependency>
@@ -96,6 +107,11 @@
             <groupId>org.jdbi</groupId>
             <artifactId>jdbi3-sqlobject</artifactId>
             <version>${jdbi.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.liquibase</groupId>
+            <artifactId>liquibase-core</artifactId>
+            <version>${liquibase.version}</version>
         </dependency>
 
         <dependency>
