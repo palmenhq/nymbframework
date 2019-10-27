@@ -10,7 +10,7 @@ import picocli.CommandLine
     name = "db",
     aliases = ["database"],
     description = ["Manage the database using Liquibase"],
-    subcommands = [MigrateCommand::class, RollbackCommand::class],
+    subcommands = [MigrateCommand::class, RollbackCommand::class, StatusCommand::class],
     mixinStandardHelpOptions = true
 )
 class RootDatabaseCommand(private val environment: Environment) : NymbCommand {
