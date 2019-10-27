@@ -1,7 +1,7 @@
 package org.nymbframework.bundles.check
 
-import org.nymbframework.core.environment.health.HealthChecker
-import org.nymbframework.core.environment.health.HealthState
+import org.nymbframework.core.health.HealthChecker
+import org.nymbframework.core.health.HealthState
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory.getLogger
 
@@ -14,7 +14,7 @@ class AppHealthChecker(private val healthCheckers: List<HealthChecker>) {
 
         healthCheckers.forEach { checker ->
             val state = checker.check()
-            if (state == HealthState.UNHEALTHY) {
+            if (state.state == HealthState.State.UNHEALTHY) {
                 logger.error("Health check ${checker::class.java} returned UNHEALTHY status: ${state.message}")
                 healthy = false
             }

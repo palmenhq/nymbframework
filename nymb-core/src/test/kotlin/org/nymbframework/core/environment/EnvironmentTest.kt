@@ -48,6 +48,32 @@ class EnvironmentTest {
         assertThat(environment[Checker::class.java].state).isFalse()
     }
 
+    @Test
+    fun registersLazyComponents() {
+        val environment = Environment(ConstantAppModeTestConfigurationReader())
+        val callCounter = Counter()
+        environment.registerLazyComponent(Counter::class.java) {
+            callCounter.count += 1
+            callCounter
+        }
+        assertThat(environment[Counter::class.java].count).isEqualTo(1)
+        assertThat(environment[Counter::class.java].count).isEqualTo(1)
+    }
+
+    @Test
+    fun registersLazyComponentsWithAliases() {
+        val environment = Environment(ConstantAppModeTestConfigurationReader())
+        val callCounter = Counter2()
+        environment.registerLazyComponent(Counter2::class.java) {
+            callCounter.count += 1
+            callCounter
+        }
+        environment.registerComponentAlias(Counter::class.java, Counter2::class.java)
+        assertThat(environment[Counter::class.java].count).isEqualTo(1)
+        assertThat(environment[Counter::class.java].count).isEqualTo(1)
+        assertThat(environment[Counter2::class.java].count).isEqualTo(1)
+    }
+
     class MyComponent(
         val prop: String
     )
@@ -63,4 +89,9 @@ class EnvironmentTest {
     class Checker {
         var state = true
     }
+
+    open class Counter {
+        var count = 0
+    }
+    class Counter2 : Counter()
 }

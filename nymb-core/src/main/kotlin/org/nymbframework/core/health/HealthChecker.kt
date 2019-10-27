@@ -1,4 +1,4 @@
-package org.nymbframework.core.environment.health
+package org.nymbframework.core.health
 
 interface HealthChecker {
     fun check(): HealthState

@@ -3,7 +3,7 @@ package org.nymbframework.core
 import org.nymbframework.bundles.check.CheckBundle
 import org.nymbframework.bundles.server.ServerBundle
 import org.nymbframework.core.commandline.RootCommand
-import org.nymbframework.core.configuration.PropertiesAndEnvConfigurationReader
+import org.nymbframework.core.configuration.PropertiesConfigurationReader
 import org.nymbframework.core.environment.Environment
 import picocli.CommandLine
 
@@ -18,13 +18,21 @@ class NymbApplication(
             .flatMap { bundle -> bundle.commands }
             .forEach { command -> commandLine.addSubcommand(command) }
 
-        return commandLine.execute(*args)
+        environment.bundles.forEach { bundle ->
+            bundle.preRun()
+        }
+
+        val result = commandLine.execute(*args)
+        environment.bundles.forEach { bundle ->
+            bundle.postRun()
+        }
+        return result
     }
 
     companion object {
         @JvmStatic
         fun create(filePath: String): NymbApplication {
-            val environment = Environment(PropertiesAndEnvConfigurationReader(filePath))
+            val environment = Environment(PropertiesConfigurationReader(filePath))
             environment.registerBundle(CheckBundle::class.java)
             environment.registerBundle(ServerBundle::class.java)
             return NymbApplication(environment)

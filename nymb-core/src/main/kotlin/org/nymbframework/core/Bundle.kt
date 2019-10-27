@@ -10,4 +10,12 @@ abstract class Bundle(protected val environment: Environment) {
     open fun registerComponents() {
         // noop
     }
+
+    open fun preRun() {
+        // noop
+    }
+
+    open fun postRun() {
+        // noop
+    }
 }
