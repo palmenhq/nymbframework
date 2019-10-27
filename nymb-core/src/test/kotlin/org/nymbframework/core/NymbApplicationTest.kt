@@ -14,7 +14,7 @@ class NymbApplicationTest {
 
         val app = NymbApplication(environment)
 
-        val result = app.start("check")
+        val result = app.run("check")
 
         assertThat(result).isEqualTo(0)
     }

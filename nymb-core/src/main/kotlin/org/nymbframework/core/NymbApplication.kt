@@ -1,13 +1,15 @@
 package org.nymbframework.core
 
+import org.nymbframework.bundles.check.CheckBundle
 import org.nymbframework.core.commandline.RootCommand
+import org.nymbframework.core.configuration.PropertiesAndEnvConfigurationReader
 import org.nymbframework.core.environment.Environment
 import picocli.CommandLine
 
 class NymbApplication(
     private val environment: Environment
 ) {
-    fun start(vararg args: String): Int {
+    fun run(vararg args: String): Int {
         val rootCommand = RootCommand()
         val commandLine = CommandLine(rootCommand)
         rootCommand.commandLine = commandLine
@@ -16,5 +18,14 @@ class NymbApplication(
             .forEach { command -> commandLine.addSubcommand(command) }
 
         return commandLine.execute(*args)
+    }
+
+    companion object {
+        @JvmStatic
+        fun create(filePath: String): NymbApplication {
+            val environment = Environment(PropertiesAndEnvConfigurationReader(filePath))
+            environment.registerBundle(CheckBundle::class.java)
+            return NymbApplication(environment)
+        }
     }
 }
