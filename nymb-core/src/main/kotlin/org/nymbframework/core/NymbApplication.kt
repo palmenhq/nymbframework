@@ -33,8 +33,8 @@ class NymbApplication(
         @JvmStatic
         fun create(filePath: String): NymbApplication {
             val environment = Environment(PropertiesConfigurationReader(filePath))
-            environment.registerBundle(CheckBundle::class.java)
-            environment.registerBundle(ServerBundle::class.java)
+            environment.registerBundle(CheckBundle(environment))
+            environment.registerBundle(ServerBundle(environment))
             return NymbApplication(environment)
         }
     }

@@ -19,11 +19,6 @@ class Environment(val configurationReader: ConfigurationReader, envFacade: EnvFa
         registerComponent(envFacade)
     }
 
-    fun <T : Bundle> registerBundle(bundleClass: Class<T>): Environment {
-        registerBundle(bundleClass.getDeclaredConstructor(Environment::class.java).newInstance(this))
-        return this
-    }
-
     fun <T : Bundle> registerBundle(bundle: T): Environment {
         _bundles.add(bundle)
         bundle.registerComponents()

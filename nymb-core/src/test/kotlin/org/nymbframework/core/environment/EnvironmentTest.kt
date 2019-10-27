@@ -25,7 +25,7 @@ class EnvironmentTest {
     @Test
     fun registersAndInstantiatesBundle() {
         val environment = Environment(ConstantAppModeTestConfigurationReader())
-        environment.registerBundle(MyBundle::class.java)
+        environment.registerBundle(MyBundle(environment))
         assertThat(environment.getBundle(MyBundle::class.java)?.getEnvironment_()).isEqualTo(environment)
         assertThat(environment[Checker::class.java].state).isTrue()
     }

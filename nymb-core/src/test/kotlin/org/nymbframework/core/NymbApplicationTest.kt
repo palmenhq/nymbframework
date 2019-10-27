@@ -10,7 +10,7 @@ class NymbApplicationTest {
     @Test
     fun executesCheck() {
         val environment = Environment(PropertiesConfigurationReader("/test-config.properties"))
-        environment.registerBundle(CheckBundle::class.java)
+        environment.registerBundle(CheckBundle(environment))
 
         val app = NymbApplication(environment)
 
