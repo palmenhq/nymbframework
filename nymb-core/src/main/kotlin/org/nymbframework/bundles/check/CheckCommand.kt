@@ -6,6 +6,7 @@ import picocli.CommandLine
 
 @CommandLine.Command(name = "check")
 class CheckCommand(
+    private val healthChecker: AppHealthChecker,
     private val appMode: String,
     private val disableEmojis: Boolean
 ) : NymbCommand {
@@ -15,12 +16,18 @@ class CheckCommand(
 
     private val logger = getLogger(CheckCommand::class.java)
     override fun call(): Int {
+        val healthy = healthChecker.check()
+
         if (disableEmojis || cliDisableEmojis) {
             logger.info("All is good in appMode \"$appMode\"! :+1:")
         } else {
             logger.info("All is good in appMode \"$appMode\" 👍")
         }
 
-        return 0
+        return if (healthy) {
+            0
+        } else {
+            1
+        }
     }
 }

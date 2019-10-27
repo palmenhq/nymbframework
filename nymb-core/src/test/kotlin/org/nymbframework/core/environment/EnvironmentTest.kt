@@ -27,6 +27,7 @@ class EnvironmentTest {
         val environment = Environment(ConstantAppModeTestConfigurationReader())
         environment.registerBundle(MyBundle::class.java)
         assertThat(environment.getBundle(MyBundle::class.java)?.getEnvironment_()).isEqualTo(environment)
+        assertThat(environment[Checker::class.java].check()).isTrue()
     }
 
     @Test
@@ -34,6 +35,7 @@ class EnvironmentTest {
         val environment = Environment(ConstantAppModeTestConfigurationReader())
         environment.registerBundle(MyBundle(environment))
         assertThat(environment.getBundle(MyBundle::class.java)?.getEnvironment_()).isEqualTo(environment)
+        assertThat(environment[Checker::class.java].check()).isTrue()
     }
 
     class MyComponent(
@@ -41,6 +43,13 @@ class EnvironmentTest {
     )
 
     class MyBundle(environment: Environment) : Bundle(environment) {
+        override fun registerComponents() {
+            environment.registerComponent(Checker::class.java, Checker())
+        }
         fun getEnvironment_(): Environment = environment
+    }
+
+    class Checker {
+        fun check(): Boolean = true
     }
 }
