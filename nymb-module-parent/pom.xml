@@ -201,14 +201,15 @@
                 <version>0.10.0</version>
                 <executions>
                     <execution>
-                        <phase>pre-site</phase>
+                        <phase>prepare-package</phase>
                         <goals>
                             <goal>dokka</goal>
+                            <goal>javadoc</goal>
+                            <goal>javadocJar</goal>
                         </goals>
                     </execution>
                 </executions>
                 <configuration>
-                    <outputFormat>javadoc</outputFormat>
                     <sourceLinks>
                         <link>
                             <path>${project.basedir}/src/main/kotlin</path>
@@ -224,18 +225,6 @@
                 <version>2.22.0</version>
                 <configuration>
                     <rerunFailingTestsCount>2</rerunFailingTestsCount>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-jar-plugin</artifactId>
-                <version>3.0.2</version>
-                <configuration>
-                    <archive>
-                        <manifestEntries>
-                            <Automatic-Module-Name>org.nymbframework</Automatic-Module-Name>
-                        </manifestEntries>
-                    </archive>
                 </configuration>
             </plugin>
             <plugin>
