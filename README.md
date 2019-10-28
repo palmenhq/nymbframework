@@ -51,3 +51,5 @@ public class MyApplication {
 ```
 
 Compile, start with `java -jar target/my-app-SNAPSHOT.jar server`, and boom - profit 🤑 It doesn't have to be hard just because you get control.
+
+TODO: More detailed documentation
