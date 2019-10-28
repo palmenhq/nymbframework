@@ -1,0 +1,7 @@
+language: java
+jdk:
+    - openjdk8
+script:
+    - ./mvnw -f nymb-module-parent/pom.xml clean install
+    - ./mvnw -f nymb-core/pom.xml clean install
+    - ./mvnw -f nymb-parent/pom.xml clean install
