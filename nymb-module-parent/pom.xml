@@ -14,7 +14,7 @@
     <version>0.1.0-SNAPSHOT</version>
 
     <name>Nymb Framework Parent Module</name>
-    <description>Nymb Framework: Not Your Magic Bullet - Parent for Nymb modules</description>
+    <description>Nymb Framework: Not Your Magic Beast - Parent for Nymb modules</description>
     <url>https://www.nymbframework.org</url>
 
     <licenses>
@@ -25,9 +25,9 @@
         </license>
     </licenses>
     <scm>
-        <connection>scm:git:git@github.com:nymbframework/nymb.git</connection>
-        <developerConnection>scm:git:git@github.com:nymbframework/nymb.git</developerConnection>
-        <url>https://github.com/nymbframework/nymb.git</url>
+        <connection>scm:git:git@github.com:palmenhq/nymbframework.git</connection>
+        <developerConnection>scm:git:git@github.com:palmenhq/nymbframework.git</developerConnection>
+        <url>https://github.com/palmenhq/nymbframework.git</url>
         <tag>HEAD</tag>
     </scm>
     <developers>
@@ -37,7 +37,7 @@
     </developers>
     <issueManagement>
         <system>GitHub Issue Tracker</system>
-        <url>https://github.com/nymbframework/nymb/issues</url>
+        <url>https://github.com/palmenhq/nymbframework/issues</url>
     </issueManagement>
 
 
@@ -201,12 +201,23 @@
                 <version>0.10.0</version>
                 <executions>
                     <execution>
-                        <phase>pre-site</phase>
+                        <phase>prepare-package</phase>
                         <goals>
                             <goal>dokka</goal>
+                            <goal>javadoc</goal>
+                            <goal>javadocJar</goal>
                         </goals>
                     </execution>
                 </executions>
+                <configuration>
+                    <sourceLinks>
+                        <link>
+                            <path>${project.basedir}/src/main/kotlin</path>
+                            <url>https://github.com/palmenhq/nymbframework/blob/master/${project.artifactId}/src/main/kotlin</url>
+                            <lineSuffix>#L</lineSuffix>
+                        </link>
+                    </sourceLinks>
+                </configuration>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -218,15 +229,16 @@
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-jar-plugin</artifactId>
-                <version>3.0.2</version>
-                <configuration>
-                    <archive>
-                        <manifestEntries>
-                            <Automatic-Module-Name>org.nymbframework</Automatic-Module-Name>
-                        </manifestEntries>
-                    </archive>
-                </configuration>
+                <artifactId>maven-source-plugin</artifactId>
+                <version>3.1.0</version>
+                <executions>
+                    <execution>
+                        <id>attach-sources</id>
+                        <goals>
+                            <goal>jar-no-fork</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>

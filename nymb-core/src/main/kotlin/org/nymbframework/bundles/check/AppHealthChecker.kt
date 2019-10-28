@@ -8,6 +8,9 @@ import org.slf4j.LoggerFactory.getLogger
 class AppHealthChecker(private val healthCheckers: List<HealthChecker>) {
     private val logger: Logger = getLogger(AppHealthChecker::class.java)
 
+    /**
+     * Walks through all registered [HealthChecker]'s and reports any failed checks
+     */
     fun check(): Boolean {
         logger.info("Performing health checks")
         var healthy = true

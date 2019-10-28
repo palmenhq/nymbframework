@@ -7,13 +7,13 @@ import picocli.CommandLine
  * Constructors should take either 0 arguments or 1 argument of type [Environment].
  */
 class EnvironmentCommandFactory(private val environment: Environment) : CommandLine.IFactory {
-    @Suppress("UNCHECKED_CAST")
     override fun <K : Any> create(cls: Class<K>): K {
         val envConstructor = cls.declaredConstructors.firstOrNull { constructor ->
             constructor.parameterCount == 1 && constructor.parameterTypes[0] == Environment::class.java
         }
 
         if (envConstructor != null) {
+            @Suppress("UNCHECKED_CAST")
             return envConstructor.newInstance(environment) as K
         }
 
@@ -22,6 +22,7 @@ class EnvironmentCommandFactory(private val environment: Environment) : CommandL
         }
 
         if (noArgConstructor != null) {
+            @Suppress("UNCHECKED_CAST")
             return noArgConstructor.newInstance() as K
         }
 

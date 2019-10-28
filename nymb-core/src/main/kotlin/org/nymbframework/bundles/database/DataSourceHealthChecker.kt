@@ -6,6 +6,9 @@ import org.nymbframework.core.health.HealthState
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory.getLogger
 
+/**
+ * Checks so the given data source is alive
+ */
 class DataSourceHealthChecker(private val dataSource: DataSource) : HealthChecker {
     private val logger: Logger = getLogger(DataSourceHealthChecker::class.java)
 
