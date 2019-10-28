@@ -4,6 +4,9 @@ import org.nymbframework.core.commandline.NymbCommand
 import org.slf4j.LoggerFactory.getLogger
 import picocli.CommandLine
 
+/**
+ * Runs all app health checkers to verify environment is set up properly
+ */
 @CommandLine.Command(name = "check")
 class CheckCommand(
     private val healthChecker: AppHealthChecker,

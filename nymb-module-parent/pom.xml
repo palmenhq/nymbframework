@@ -207,6 +207,16 @@
                         </goals>
                     </execution>
                 </executions>
+                <configuration>
+                    <outputFormat>javadoc</outputFormat>
+                    <sourceLinks>
+                        <link>
+                            <path>${project.basedir}/src/main/kotlin</path>
+                            <url>https://github.com/palmenhq/nymbframework/blob/master/${project.artifactId}/src/main/kotlin</url>
+                            <lineSuffix>#L</lineSuffix>
+                        </link>
+                    </sourceLinks>
+                </configuration>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -227,6 +237,19 @@
                         </manifestEntries>
                     </archive>
                 </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-source-plugin</artifactId>
+                <version>3.1.0</version>
+                <executions>
+                    <execution>
+                        <id>attach-sources</id>
+                        <goals>
+                            <goal>jar-no-fork</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>

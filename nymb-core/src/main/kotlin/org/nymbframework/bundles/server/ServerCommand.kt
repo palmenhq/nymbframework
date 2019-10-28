@@ -5,9 +5,15 @@ import org.nymbframework.core.commandline.NymbCommand
 import org.nymbframework.core.environment.Environment
 import picocli.CommandLine
 
+/**
+ * Run the web server
+ */
 @CommandLine.Command(name = "server")
 class ServerCommand(private val environment: Environment) : NymbCommand {
-    @CommandLine.Option(names = ["--port", "-p"])
+    @CommandLine.Option(
+        names = ["--port", "-p"],
+        description = ["Override the configured port"]
+    )
     var port: Int? = null
 
     override fun call(): Int {

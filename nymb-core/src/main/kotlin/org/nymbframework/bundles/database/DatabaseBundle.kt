@@ -20,6 +20,9 @@ import org.nymbframework.core.configuration.EnvVarAwareProperties
 import org.nymbframework.core.environment.Environment
 import org.nymbframework.core.environment.configure
 
+/**
+ * Bundles JDBI and Liquibase for
+ */
 class DatabaseBundle @JvmOverloads constructor(
     environment: Environment,
     private val hikariConfigFile: String? = null,

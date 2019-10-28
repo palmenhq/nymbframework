@@ -1,5 +1,10 @@
 package org.nymbframework.core.configuration
 
+/**
+ * Reads configuration for different data structures.
+ *
+ * @see EnvVarAwareProperties for example
+ */
 interface ConfigurationReader {
     operator fun get(property: String): String?
     fun getBoolean(property: String): Boolean? = get(property)?.toBoolean()

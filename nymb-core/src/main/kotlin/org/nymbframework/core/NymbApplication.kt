@@ -5,12 +5,18 @@ import ch.qos.logback.classic.Logger
 import org.nymbframework.bundles.check.CheckBundle
 import org.nymbframework.bundles.server.ServerBundle
 import org.nymbframework.core.commandline.RootCommand
+import org.nymbframework.core.configuration.EnvFacade
+import org.nymbframework.core.configuration.EnvVarAwareProperties
 import org.nymbframework.core.configuration.PropertiesConfigurationReader
 import org.nymbframework.core.environment.Environment
 import org.nymbframework.core.environment.EnvironmentCommandFactory
 import org.slf4j.LoggerFactory
 import picocli.CommandLine
 
+/**
+ * The entry point for a Nymb application.
+ * @see Environment for a more in-depth detail of how to configure Nymb
+ */
 class NymbApplication(
     val environment: Environment
 ) {
@@ -38,15 +44,25 @@ class NymbApplication(
 
         val result = commandLine.execute(*args)
         environment.bundles.forEach { bundle ->
-            bundle.postRun()
+            bundle.postExec()
         }
         return result
     }
 
     companion object {
+        /**
+         * Factory method for a standard [NymbApplication].
+         *
+         * @param filePath Resource path to a configuration file that, at least, contains the property `app.mode`. This file
+         * must be included with the built JAR.
+         */
         @JvmStatic
         fun create(filePath: String): NymbApplication {
-            val environment = Environment(PropertiesConfigurationReader(filePath))
+            val envFacade = EnvFacade()
+            val environment = Environment(
+                PropertiesConfigurationReader(filePath, properties = EnvVarAwareProperties(envFacade)),
+                envFacade
+            )
             environment.registerBundle(CheckBundle(environment))
             environment.registerBundle(ServerBundle(environment))
             return NymbApplication(environment)
