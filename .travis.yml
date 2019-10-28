@@ -1,0 +1,15 @@
+language: java
+jdk:
+    - openjdk8
+
+install:
+    - ./mvnw -f nymb-module-parent/pom.xml install -DskipTests=true -Dmaven.javadoc.skip=true -B -V
+    - ./mvnw -f nymb-core/pom.xml install -DskipTests=true -Dmaven.javadoc.skip=true -B -V
+    - ./mvnw -f nymb-parent/pom.xml install -DskipTests=true -Dmaven.javadoc.skip=true -B -V
+
+script:
+    - ./mvnw -f nymb-module-parent/pom.xml clean install
+    - ./mvnw -f nymb-core/pom.xml clean install
+    - ./mvnw -f nymb-parent/pom.xml clean install
+notifications:
+    email: false
