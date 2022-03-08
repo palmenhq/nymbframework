@@ -46,7 +46,7 @@
         <jackson.core.version>2.9.10</jackson.core.version>
         <jackson.databind.version>2.9.10.4</jackson.databind.version>
         <hikari.version>3.4.0</hikari.version>
-        <liquibase.version>3.7.0</liquibase.version>
+        <liquibase.version>4.8.0</liquibase.version>
     </properties>
 
     <dependencies>
