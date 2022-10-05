@@ -44,7 +44,7 @@
         <kotlin.version>1.3.31</kotlin.version>
         <jdbi.version>3.10.0</jdbi.version>
         <jackson.core.version>2.9.10</jackson.core.version>
-        <jackson.databind.version>2.9.10.4</jackson.databind.version>
+        <jackson.databind.version>2.12.6.1</jackson.databind.version>
         <hikari.version>3.4.0</hikari.version>
         <liquibase.version>3.7.0</liquibase.version>
     </properties>
